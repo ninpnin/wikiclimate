@@ -40,7 +40,13 @@ def main(args):
     rows = []
     columns = ["timeframe", "type", "value"]
     timeframes = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'year']
-    types = ["record high C", "high C", "mean C", "low C", "record low C", "precipitation mm", "precipitation days", "sun"]
+    
+    # Fetch both Celcius and Fahrenheit temperatures
+    types = ["record high", "high", "mean", "low", "record low"]
+    types = [t + " C" for t in types] + [t + " F" for t in types]
+    
+    # Add precipitation, both mm and inches
+    types += ["precipitation mm", "precipitation inch", "precipitation days", "sun"]
     
     for row in content.split("\n"):
         data = []
