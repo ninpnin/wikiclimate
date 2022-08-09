@@ -3,6 +3,7 @@ import requests
 import re
 import pandas as pd
 import json
+from datetime import date
 
 def to_float(element):
     try:
@@ -74,11 +75,16 @@ def main(args):
     df = df.drop_duplicates()
     print(df)
 
-    city = city.replace(" ", "_").replace(",", "").lower()
-    jsonpath = f"{args.datapath}/{city}.json"
+    city_l = city.replace(" ", "_").replace(",", "").lower()
+    jsonpath = f"{args.datapath}/{city_l}.json"
     d = df.to_dict(orient="records")
 
-    d = {"date": {}, "data": d}
+    today = date.today()
+    d = {
+        "city": city,
+        "date_fetched": {"year": today.year, "month": today.month, "day": today.day},
+        "data": d
+    }
     with open(jsonpath, "w") as f:
         json.dump(d, f, indent=4)
 
