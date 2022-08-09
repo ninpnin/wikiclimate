@@ -11,7 +11,9 @@ def to_float(element):
         return None
 
 def main(args):
-    city = args.city.lower().capitalize()
+    city = args.city
+    print(city)
+    city = " ".join([w.capitalize() for w in city.split()])
     print(city)
     url = f"https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles={city}&rvslots=main"
 
