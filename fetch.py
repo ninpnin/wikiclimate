@@ -38,6 +38,8 @@ def main(args):
         #print(content)
 
     content = content.replace("\\n", "\n")
+    content = content.replace("\u2212", "-")
+    content = content.replace("\\u2212", "-")
     
     rows = []
     columns = ["timeframe", "type", "value"]
@@ -54,19 +56,20 @@ def main(args):
         data = []
         if "|" in row:
             for timeframe in timeframes:
-                if f"|{timeframe}" in row:
+                if f"{timeframe}" in row:
                     data.append(timeframe)
                     break
 
-            #print(row)
+            print(row)
 
             for t in types:
-                if f" {t} " in row:
+                if f" {t}" in row:
                     data.append(t)
                     break
             
             numeric = row.split("=")[-1].strip()
             numeric = to_float(numeric)
+            print(data)
             if numeric is not None and len(data) == 2:
                 data.append(float(numeric))
                 rows.append(data)
