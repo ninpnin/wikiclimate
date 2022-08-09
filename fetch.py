@@ -2,6 +2,7 @@ import argparse
 import requests
 import re
 import pandas as pd
+import json
 
 def to_float(element):
     try:
@@ -72,9 +73,19 @@ def main(args):
     df = pd.DataFrame(rows, columns=columns)
     df = df.drop_duplicates()
     print(df)
+
+    city = city.replace(" ", "_").replace(",", "").lower()
+    jsonpath = f"{args.datapath}/{city}.json"
+    d = df.to_dict(orient="records")
+
+    d = {"date": {}, "data": d}
+    with open(jsonpath, "w") as f:
+        json.dump(d, f, indent=4)
+
     #print(matches)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--city", type=str, required=True)
+    parser.add_argument("--datapath", type=str, default="data")
     args = parser.parse_args()
     main(args)
