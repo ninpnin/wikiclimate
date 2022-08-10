@@ -53,6 +53,7 @@ def main(args):
     types += ["precipitation mm", "precipitation inch", "precipitation days", "sun"]
     
     for row in content.split("\n"):
+        row = " ".join(row.split())
         data = []
         if "|" in row:
             for timeframe in timeframes:
@@ -63,7 +64,7 @@ def main(args):
             print(row)
 
             for t in types:
-                if f" {t}" in row:
+                if f"{timeframe} {t}" in row:
                     data.append(t)
                     break
             
